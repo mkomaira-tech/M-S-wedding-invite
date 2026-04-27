@@ -10,18 +10,19 @@
 
     <style>
         /* =========================================
-            الثيم الليلي الفخم مع لون الخط المخصص
+            الثيم الجديد
         ========================================= */
         :root {
             --gold: #D4AF37; 
             --gold-dark: #B8860B; 
             --gold-light: #F9E596; 
-            --bg-ivory: #1A1A1A; /* تحويل الخلفية الأساسية للون داكن */
-            --bg-card: rgba(20, 20, 20, 0.85); /* كروت داكنة شفافة لتبرز اللون الفاتح للخط */
+            --bg-ivory: #D6D2C4; 
+            --bg-card: rgba(181, 178, 166, 0.85); 
             
-            /* اللون المستخرج من صورتك */
-            --text-main: #D6D2C4; 
-            --text-muted: #A8A498; /* درجة أغمق قليلاً من لونك للنصوص الثانوية */
+            /* لون الخط المخصص */
+            --text-main: #2b2b2b; 
+            --text-h1: #2C2C2C; /* الأسود الرمادي للعناوين */
+            --text-muted: #595959; 
             
             --red-main: #C0392B; 
             --red-light: #E74C3C;
@@ -42,7 +43,7 @@
 
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: var(--bg-ivory);
+            background-color: #111; /* لون أساسي داكن */
             background-image: url("https://cdvotvobfynweyaouuyo.supabase.co/storage/v1/object/public/wedding-photos/background.jpg");
             background-size: cover;
             background-position: center;
@@ -57,7 +58,7 @@
                 content: "";
                 position: fixed;
                 inset: 0;
-                background: rgba(0, 0, 0, 0.7); /* تعتيم أقوى للصورة لكي يبرز النص الفاتح */
+                background: rgba(0, 0, 0, 0.55); /* خلفية داكنة قليلاً لتبرز الصورة أكثر */
                 z-index: -1;
             }
 
@@ -67,7 +68,7 @@
         #cinematic-intro {
             position: fixed;
             inset: 0;
-            background: #0A0A0A; 
+            background: rgba(15, 15, 15, 0.85); /* خلفية داكنة لشاشة البداية لتظهر الصورة */
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -84,7 +85,7 @@
             background-image: url('https://cdvotvobfynweyaouuyo.supabase.co/storage/v1/object/public/wedding-photos/background.jpg');
             background-size: cover;
             background-position: center;
-            opacity: 0.3; 
+            opacity: 0.45; /* إظهار الصورة بشكل أوضح */
             animation: slowZoom 20s ease-in-out infinite alternate;
         }
 
@@ -97,21 +98,27 @@
             position: relative;
             z-index: 2;
             text-align: center;
+            background: rgba(214, 210, 196, 0.3); /* خلفية خفيفة جداً تحت النص لزيادة الوضوح */
+            padding: 30px 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
         }
 
             .intro-content h1 {
-                color: var(--gold);
+                color: var(--text-h1); /* لون العناوين الأسود الرمادي */
                 font-family: 'Amiri', serif;
                 font-size: clamp(2.8rem, 10vw, 5rem);
-                text-shadow: 0px 4px 15px rgba(212,175,55,0.3);
+                text-shadow: 0px 0px 20px rgba(255,255,255,0.8); /* ظل فاتح ليبرز على الخلفية الداكنة */
             }
 
             .intro-content p {
-                color: var(--text-main); /* استخدام لونك المخصص هنا */
+                color: var(--text-main); 
                 font-size: clamp(1.2rem, 3vw, 1.5rem);
                 letter-spacing: 3px;
                 margin-top: 10px;
                 font-weight: bold;
+                text-shadow: 0 0 10px rgba(255,255,255,0.8);
             }
 
         #enter-btn {
@@ -149,25 +156,25 @@
         .hero-title {
             font-family: 'Amiri', serif;
             font-size: clamp(2.5rem, 9vw, 4rem);
-            color: var(--text-main); /* العنوان الرئيسي بلونك المخصص */
-            text-shadow: 0 0 15px rgba(0,0,0,0.8);
+            color: var(--text-h1); /* لون العناوين الأسود الرمادي */
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 5px rgba(255, 255, 255, 0.5); /* ظل أبيض قوي ليبرز النص على الخلفية الداكنة */
         }
 
         h2 {
             font-family: 'Amiri', serif;
-            color: var(--gold);
+            color: var(--text-h1); /* نفس لون h1 */
             text-align: center;
             margin: 20px 0;
             font-size: 2.2rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 5px rgba(255, 255, 255, 0.5); /* ظل فاتح ليبرز النص الداكن */
         }
 
         h3 {
-            color: var(--text-muted); 
+            color: #E8E8E8; /* تم تفتيح لون الـ h3 قليلاً ليكون أوضح على الخلفية الداكنة */
             font-weight: bold;
             font-size: 1.1rem;
             text-align: center;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
         }
 
         .page {
@@ -193,7 +200,7 @@
             margin: 20px auto;
             width: fit-content;
             padding: clamp(10px, 3vw, 20px);
-            background: rgba(20, 20, 20, 0.6); /* خلفية داكنة للصور */
+            background: rgba(181, 178, 166, 0.6); 
             border-radius: 20px;
             position: relative;
         }
@@ -216,7 +223,7 @@
 
         .trio-container img {
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             z-index: 2;
             transition: transform 0.3s;
         }
@@ -227,19 +234,20 @@
         }
 
         .card, .countdown-wrap {
-            background: var(--bg-card); /* خلفية البطاقات الداكنة لبروز النص */
+            background: var(--bg-card); 
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(212,175,55,0.3);
+            border: 1px solid rgba(212,175,55,0.5);
             border-radius: 18px;
             padding: 20px;
             margin: 15px auto;
             max-width: 600px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
             .card p {
-                color: var(--text-main); /* لونك المخصص للنصوص داخل الكروت */
+                color: var(--text-main); 
                 font-size: 1.1rem;
+                font-weight: 600;
             }
 
         /* --- العداد --- */
@@ -259,7 +267,7 @@
 
             .countdown-wrap .num {
                 font-size: clamp(1.5rem, 7vw, 2.5rem);
-                color: var(--text-main); /* لون الأرقام مخصص */
+                color: var(--text-main); 
                 font-weight: bold;
                 line-height: 1;
             }
@@ -276,7 +284,6 @@
             height: clamp(250px, 50vh, 350px);
             border: none;
             border-radius: 15px;
-            filter: invert(90%) hue-rotate(180deg); /* خريطة بالوضع الليلي لتلائم التصميم */
         }
 
         /* --- نافذة التكبير --- */
@@ -288,7 +295,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(10, 10, 10, 0.95);
+            background-color: rgba(181, 178, 166, 0.95);
             backdrop-filter: blur(8px);
             justify-content: center;
             align-items: center;
@@ -335,7 +342,7 @@
             width: 100%;
             background: rgba(212,175,55,0.1);
             border: 1px solid var(--gold);
-            color: var(--gold) !important;
+            color: var(--gold-dark) !important;
             text-align: center;
             padding: 12px;
             border-radius: 50px;
@@ -352,7 +359,7 @@
                 background: rgba(212,175,55,0.25);
             }
 
-        /* زر Wish Money باللون الأحمر والأبيض */
+        /* زر Wish Money */
         .btn-wish {
             background: linear-gradient(135deg, var(--red-main), var(--red-light)) !important;
             color: #FFF !important;
@@ -364,7 +371,7 @@
                 background: linear-gradient(135deg, var(--red-light), var(--red-main)) !important;
             }
 
-        /* صندوق النقوط بأطراف حمراء خفيفة */
+        /* صندوق النقوط */
         .card-wish {
             border: 1px solid rgba(192, 57, 43, 0.4);
         }
@@ -373,37 +380,38 @@
             width: 100%;
             padding: 12px 15px;
             margin-bottom: 15px;
-            background: rgba(30,30,30,0.8); /* حقول إدخال داكنة تبرز النص الفاتح */
-            border: 1px solid rgba(212,175,55,0.4);
+            background: rgba(245, 243, 235, 0.8); 
+            border: 1px solid rgba(212,175,55,0.6);
             border-radius: 12px;
-            color: var(--text-main); /* الكتابة داخل الحقول بلونك المخصص */
+            color: var(--text-main); 
             font-family: 'Cairo', sans-serif;
             font-size: 1rem;
+            font-weight: 600;
             outline: none;
             transition: 0.3s;
         }
 
-            .form-input::placeholder { color: #888; } 
-            .form-input:focus { border-color: var(--gold); box-shadow: 0 0 8px rgba(212,175,55,0.3); }
-            .form-input option { background: #222; color: var(--text-main); }
+            .form-input::placeholder { color: #666; font-weight: normal; } 
+            .form-input:focus { border-color: var(--gold); box-shadow: 0 0 8px rgba(212,175,55,0.4); }
+            .form-input option { background: #EBE8DD; color: var(--text-main); }
 
         .ticket-box {
-            background: linear-gradient(135deg, rgba(40,40,40,.95), rgba(20,20,20,.95));
+            background: linear-gradient(135deg, rgba(190, 186, 171, .95), rgba(175, 172, 158, .95));
             border: 1.5px dashed var(--gold);
             padding: 20px;
             border-radius: 14px;
             text-align: center;
             animation: fadeSlideUp 0.5s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
         }
 
         .lang-btn {
             position: absolute;
             top: 15px;
             left: 15px;
-            background: rgba(20, 20, 20, 0.8);
+            background: rgba(181, 178, 166, 0.8);
             border: 1px solid var(--gold);
-            color: var(--gold);
+            color: var(--gold-dark);
             padding: 6px 14px;
             border-radius: 20px;
             font-family: 'Cairo', sans-serif;
@@ -424,15 +432,15 @@
             transform: translateX(-50%);
             width: 95%;
             max-width: 480px; 
-            background: rgba(20, 20, 20, 0.95);
-            border: 1px solid rgba(212,175,55,0.3);
+            background: rgba(181, 178, 166, 0.95);
+            border: 1px solid rgba(212,175,55,0.5);
             border-radius: 40px;
             display: flex;
             justify-content: space-around;
             align-items: center;
             padding: 8px 5px;
             z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
         .nav-item {
@@ -803,7 +811,7 @@
 
                 if (!nameInput) { alert("يرجى إدخال اسمك الكريم أولاً!"); return; }
 
-                btn.innerText = "جارٍ تجهيز تذكرتك... ⏳";
+                btn.innerText = "Please wait... ⏳"; 
                 btn.disabled = true;
                 btn.style.opacity = "0.7";
 
