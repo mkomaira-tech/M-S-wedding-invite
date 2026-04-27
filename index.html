@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -14,10 +14,10 @@
         ========================================= */
         :root {
             --gold: #D4AF37;
-            --gold-light: #FDE047; /* ذهبي مشع جداً */
+            --gold-light: #FDE047;
             --bg-dark: #070B14;
             --bg-card: rgba(15, 23, 42, 0.8);
-            --text-main: #FFFFFF; /* أبيض ناصع */
+            --text-main: #FFFFFF;
             --text-muted: #E2E8F0;
         }
 
@@ -44,7 +44,7 @@
             color: var(--text-main);
             overflow-x: hidden;
             direction: rtl;
-            touch-action: pan-y; /* يمنع المتصفح من التدخل في السحب الأفقي */
+            touch-action: pan-y;
         }
 
             body::before {
@@ -83,13 +83,8 @@
         }
 
         @keyframes slowZoom {
-            0% {
-                transform: scale(1);
-            }
-
-            100% {
-                transform: scale(1.15);
-            }
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
         }
 
         .intro-content {
@@ -153,13 +148,8 @@
         }
 
         @keyframes glow {
-            0%, 100% {
-                filter: brightness(1);
-            }
-
-            50% {
-                filter: brightness(1.3);
-            }
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
         }
 
         h2 {
@@ -178,7 +168,6 @@
             text-align: center;
         }
 
-        /* الصفحات وحركة الانزلاق */
         .page {
             display: none;
             padding: 10px 20px;
@@ -190,18 +179,10 @@
             }
 
         @keyframes slideHorizontal {
-            from {
-                opacity: 0;
-                transform: translateX(-40px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
-        /* حاوية الصور الثلاثية الذكية */
         .trio-container {
             display: flex;
             justify-content: center;
@@ -227,15 +208,8 @@
             }
 
         @keyframes glowingPulse {
-            0%, 100% {
-                box-shadow: 0 0 10px rgba(212,175,55,0.3);
-                border-color: rgba(212,175,55,0.5);
-            }
-
-            50% {
-                box-shadow: 0 0 25px rgba(212,175,55,0.8);
-                border-color: rgba(225,29,72,0.8);
-            }
+            0%, 100% { box-shadow: 0 0 10px rgba(212,175,55,0.3); border-color: rgba(212,175,55,0.5); }
+            50% { box-shadow: 0 0 25px rgba(212,175,55,0.8); border-color: rgba(225,29,72,0.8); }
         }
 
         .trio-container img {
@@ -253,7 +227,6 @@
             width: clamp(150px, 45vw, 350px);
         }
 
-        /* الكروت والعداد */
         .card, .countdown-wrap {
             background: var(--bg-card);
             backdrop-filter: blur(15px);
@@ -269,27 +242,97 @@
                 font-size: 1.1rem;
             }
 
+        /* --- التعديل الأول: تصغير العداد --- */
         .countdown-wrap {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: clamp(8px, 2vw, 20px);
             text-align: center;
         }
 
+            .countdown-wrap .box {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                min-width: clamp(55px, 18vw, 80px);
+            }
+
             .countdown-wrap .num {
-                font-size: 2.5rem;
+                font-size: clamp(1.5rem, 7vw, 2.5rem);
                 color: var(--gold-light);
                 font-weight: bold;
                 line-height: 1;
             }
 
             .countdown-wrap .lbl {
-                font-size: 1rem;
+                font-size: clamp(0.75rem, 3vw, 1rem);
                 color: #FFF;
                 font-weight: bold;
             }
 
-        /* أزرار ونماذج الإدخال */
+        /* --- التعديل الثاني: تصغير الخريطة --- */
+        .map-wrap iframe {
+            width: 100%;
+            height: clamp(250px, 50vh, 350px);
+            border: none;
+            border-radius: 15px;
+        }
+
+        /* --- التعديل الثالث: نافذة التكبير --- */
+        .img-card {
+            cursor: pointer;
+        }
+
+        #image-modal {
+            display: none;
+            position: fixed;
+            z-index: 100000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 10, 20, 0.95);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+            #image-modal.show {
+                display: flex;
+                opacity: 1;
+            }
+
+        #modal-img {
+            max-width: 90%;
+            max-height: 85%;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(212,175,55,0.4);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        #image-modal.show #modal-img {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: #FFF;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+            .close-modal:hover {
+                color: var(--gold-light);
+            }
+
         .btn {
             display: block;
             width: 100%;
@@ -326,21 +369,10 @@
             transition: 0.3s;
         }
 
-            .form-input::placeholder {
-                color: #94A3B8;
-            }
+            .form-input::placeholder { color: #94A3B8; }
+            .form-input:focus { border-color: var(--gold-light); background: rgba(255,255,255,0.1); }
+            .form-input option { background: var(--bg-dark); color: #FFF; }
 
-            .form-input:focus {
-                border-color: var(--gold-light);
-                background: rgba(255,255,255,0.1);
-            }
-
-            .form-input option {
-                background: var(--bg-dark);
-                color: #FFF;
-            }
-
-        /* تذكرة الـ VIP */
         .ticket-box {
             background: linear-gradient(135deg, rgba(30,41,59,.9), rgba(15,23,42,.9));
             border: 1.5px dashed var(--gold);
@@ -350,7 +382,6 @@
             animation: fadeSlideUp 0.5s ease;
         }
 
-        /* زر الترجمة العائم */
         .lang-btn {
             position: absolute;
             top: 15px;
@@ -369,12 +400,8 @@
             transition: 0.3s;
         }
 
-            .lang-btn:hover {
-                background: var(--gold);
-                color: #000;
-            }
+            .lang-btn:hover { background: var(--gold); color: #000; }
 
-        /* شريط التنقل السفلي */
         .bottom-nav {
             position: fixed;
             bottom: 15px;
@@ -417,13 +444,6 @@
                 transform: translateY(-5px);
                 font-weight: bold;
             }
-
-        .map-wrap iframe {
-            width: 100%;
-            height: 400px;
-            border: none;
-            border-radius: 15px;
-        }
     </style>
 </head>
 <body>
@@ -449,9 +469,7 @@
 
             <section id="tab-home" class="page active">
                 <div class="trio-container">
-
                     <img src="https://cdvotvobfynweyaouuyo.supabase.co/storage/v1/object/public/wedding-photos/wed_card.jpg" class="img-card">
-
                 </div>
 
                 <div class="countdown-wrap">
@@ -504,8 +522,12 @@
         </nav>
     </div>
 
+    <div id="image-modal">
+        <span class="close-modal">×</span>
+        <img id="modal-img" src="">
+    </div>
+
     <script>
-        // 🛑 المفاتيح السرية 🛑
         // 🛑 المفاتيح السرية 🛑
         const SUPABASE_URL = "https://cdvotvobfynweyaouuyo.supabase.co";
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkdm90dm9iZnlud2V5YW91dXlvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDI1OTcsImV4cCI6MjA4ODU3ODU5N30.-6PqZWUXbkdRhC8FWTIucwxMVusUa3uCl5x5qQlPphs";
@@ -513,7 +535,6 @@
         const TELEGRAM_CHAT_ID = "1336580158";
         const WISH_NUMBER = "81351675";
 
-        // تهيئة قاعدة البيانات باسم جديد (supabaseClient) لتجنب التضارب مع المتصفح
         let supabaseClient;
         try {
             supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -571,13 +592,11 @@
             langToggle.addEventListener('click', () => {
                 currentLang = currentLang === 'ar' ? 'en' : 'ar';
                 
-                // 1. تغيير اتجاه الصفحة والزر
                 document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
                 langToggle.innerHTML = currentLang === 'ar' ? 'English 🌐' : 'عربي 🌐';
                 langToggle.style.left = currentLang === 'ar' ? '15px' : 'auto';
                 langToggle.style.right = currentLang === 'ar' ? 'auto' : '15px';
                 
-                // 2. تحديث النصوص العامة
                 document.querySelector('#cinematic-intro p').innerHTML = translations[currentLang].titleDate;
                 document.getElementById('enter-btn').innerHTML = translations[currentLang].enter;
                 document.querySelector('header h3').innerHTML = translations[currentLang].headerSub;
@@ -585,7 +604,6 @@
                 const calBtn = document.querySelector('#tab-home .btn');
                 if(calBtn) calBtn.innerHTML = translations[currentLang].cal;
                 
-                // 3. تحديث العداد
                 const timeLabels = document.querySelectorAll('.countdown-wrap .lbl');
                 if(timeLabels.length > 0) {
                     timeLabels[0].innerHTML = translations[currentLang].d;
@@ -593,8 +611,7 @@
                     timeLabels[2].innerHTML = translations[currentLang].m;
                     timeLabels[3].innerHTML = translations[currentLang].s;
                 }
-                
-                // 4. تحديث صفحة الدعوة والنقوط
+
                 const rsvpHeadings = document.querySelectorAll('#tab-rsvp h2');
                 if(rsvpHeadings[0]) rsvpHeadings[0].innerHTML = translations[currentLang].rsvpH2;
                 if(rsvpHeadings[1]) rsvpHeadings[1].innerHTML = translations[currentLang].giftsH2;
@@ -620,11 +637,9 @@
                 const wishAppBtn = document.querySelector('a[href="https://www.whish.money/"]');
                 if(wishAppBtn) wishAppBtn.innerHTML = translations[currentLang].wishBtn;
                 
-                // 5. تحديث صفحة الخريطة
                 const locH2 = document.querySelector('#tab-location h2');
                 if(locH2) locH2.innerHTML = translations[currentLang].locTitle;
 
-                // 6. تحديث شريط التنقل السفلي
                 const navSpans = document.querySelectorAll('.nav-item span');
                 if(navSpans.length > 0) {
                     navSpans[0].innerHTML = translations[currentLang].nav1;
@@ -632,12 +647,46 @@
                     navSpans[2].innerHTML = translations[currentLang].nav3;
                 }
 
-                // 7. تحديث نص زر النسخ
                 const copyBtnEl = document.getElementById('copy-number-btn');
                 if(copyBtnEl && !copyBtnEl.innerText.includes('✅')) {
                     copyBtnEl.innerText = currentLang === 'ar' ? `رقم الحساب: ${WISH_NUMBER} ${translations[currentLang].copyBtn}` : `Account: ${WISH_NUMBER} ${translations[currentLang].copyBtn}`;
                 }
             });
+
+            // --- نظام تكبير الصورة في الرئيسية ---
+            const imageModal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img');
+            const imgCard = document.querySelector('.img-card');
+            const closeModal = document.querySelector('.close-modal');
+
+            if(imgCard) {
+                imgCard.addEventListener('click', function() {
+                    modalImg.src = this.src;
+                    imageModal.style.display = 'flex';
+                    setTimeout(() => {
+                        imageModal.classList.add('show');
+                    }, 10);
+                });
+            }
+
+            function closeImageModal() {
+                imageModal.classList.remove('show');
+                setTimeout(() => {
+                    imageModal.style.display = 'none';
+                }, 300);
+            }
+
+            if(closeModal) {
+                closeModal.addEventListener('click', closeImageModal);
+            }
+
+            if(imageModal) {
+                imageModal.addEventListener('click', function(e) {
+                    if (e.target === imageModal) {
+                        closeImageModal();
+                    }
+                });
+            }
 
             // 1. الدخول للموقع
             document.getElementById('enter-btn').addEventListener('click', () => {
@@ -649,7 +698,7 @@
             // 2. نظام التبويبات
             const navItems = document.querySelectorAll('.nav-item');
             const pages = document.querySelectorAll('.page');
-            const tabsArray = ['tab-home', 'tab-rsvp', 'tab-location']; // تم إزالة الألبوم من هنا
+            const tabsArray = ['tab-home', 'tab-rsvp', 'tab-location'];
 
             function switchTab(targetId) {
                 navItems.forEach(btn => btn.classList.remove('active'));
@@ -723,15 +772,13 @@
                 btn.disabled = true;
                 btn.style.opacity = "0.7";
 
-                const total = 1; // شخص واحد
+                const total = 1;
 
                 try {
-                    // فحص إذا كانت مكتبة قاعدة البيانات تعمل أصلاً
                     if (!supabaseClient) throw new Error("مكتبة Supabase لم تتصل. تأكد من اتصالك بالإنترنت.");
 
                     let currentTable = "قيد الانتظار ⏳";
 
-                    // 1. البحث عن الضيف (لمنع التكرار)
                     const { data: existing, error: searchError } = await supabaseClient
                         .from('guests')
                         .select('*')
@@ -739,12 +786,10 @@
 
                     if (searchError) throw new Error(searchError.message);
 
-                    // 2. الضيف موجود مسبقاً
                     if (existing && existing.length > 0) {
                         currentTable = existing[0].table_number || "قيد الانتظار ⏳";
                         alert(`أهلاً بعودتك يا ${nameInput}! 🤍 لقد قمت بتسجيل حضورك مسبقاً.`);
                     }
-                    // 3. تسجيل ضيف جديد
                     else {
                         const { error: insertError } = await supabaseClient.from('guests').insert([{
                             name: nameInput,
@@ -756,21 +801,19 @@
 
                         if (insertError) throw new Error(insertError.message);
 
-                        // جلب الإحصائيات الجديدة من قاعدة البيانات لحساب الأعداد
                         const { data: allGuests } = await supabaseClient.from('guests').select('side, total_persons');
                         let groomCount = 0;
                         let brideCount = 0;
                         
                         if (allGuests) {
                             allGuests.forEach(guest => {
-                                const p = guest.total_persons || 1; // إذا لم يكن هناك عدد يعتبر شخصاً واحداً
+                                const p = guest.total_persons || 1;
                                 if (guest.side && guest.side.includes('العريس')) groomCount += p;
                                 else if (guest.side && guest.side.includes('العروس')) brideCount += p;
                             });
                         }
                         const totalCount = groomCount + brideCount;
 
-                        // إرسال إشعار تليجرام شامل ومفصل
                         const msg = `🎊 *ضيف جديد سجّل حضوره!*\n\n👤 الاسم: ${nameInput}\n📍 الجهة: ${sideInput}\n\n📊 *إحصائيات الحضور حتى الآن:*\n🤵 جهة العريس: ${groomCount}\n👰 جهة العروس: ${brideCount}\n👥 الإجمالي: ${totalCount}`;
                         
                         fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
@@ -779,9 +822,7 @@
                             body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg, parse_mode: 'Markdown' })
                         });
                     }
-                    
 
-                    // إظهار التذكرة
                     btn.style.display = 'none';
                     ticketBox.style.display = 'block';
                     ticketBox.innerHTML = `
@@ -792,7 +833,6 @@
                     `;
 
                 } catch (error) {
-                    // هنا سيظهر لك الخطأ التقني الدقيق جداً الذي يخفيه Supabase
                     alert("⚠️ خطأ تقني من قاعدة البيانات:\n" + error.message);
                     btn.innerText = "تأكيد الحضور  🎫";
                     btn.disabled = false;
