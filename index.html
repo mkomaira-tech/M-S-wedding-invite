@@ -11,16 +11,18 @@
     <style>
         /* =========================================
             الثيم: العاجي والذهبي (Ivory & Gold)
-            مع نصوص داكنة وخلفية صورة أوضح
+            مع نصوص داكنة وخلفية صورة أوضح وتعديلات الأحمر
         ========================================= */
         :root {
-            --gold: #D4AF37; /* ذهبي كلاسيكي فخم */
-            --gold-dark: #997300; /* ذهبي أغمق قليلاً للنصوص لضمان قراءة ممتازة */
+            --gold: #D4AF37; 
+            --gold-dark: #997300; 
             --gold-light: #F9E596; 
-            --bg-ivory: #FFFFF0; /* عاجي ناعم */
-            --bg-card: rgba(255, 255, 255, 0.90); /* كروت بيضاء بلمسة شفافة */
-            --text-main: #111111; /* لون داكن جداً للكلمات لتكون واضحة 100% */
-            --text-muted: #555555; /* لون رمادي داكن للنصوص الفرعية */
+            --bg-ivory: #FFFFF0; 
+            --bg-card: rgba(255, 255, 255, 0.90); 
+            --text-main: #111111; 
+            --text-muted: #555555; 
+            --red-main: #C0392B; /* لون أحمر فخم للويش ماني */
+            --red-light: #E74C3C;
         }
 
         * {
@@ -53,7 +55,6 @@
                 content: "";
                 position: fixed;
                 inset: 0;
-                /* طبقة داكنة شفافة تجعل الصورة أغمق وأوضح، وتبرز الكروت العاجية */
                 background: rgba(0, 0, 0, 0.4); 
                 z-index: -1;
             }
@@ -64,7 +65,7 @@
         #cinematic-intro {
             position: fixed;
             inset: 0;
-            background: #111; /* خلفية داكنة هنا لتوضيح الصورة المدمجة معها */
+            background: #111; 
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -81,7 +82,7 @@
             background-image: url('https://cdvotvobfynweyaouuyo.supabase.co/storage/v1/object/public/wedding-photos/background.jpg');
             background-size: cover;
             background-position: center;
-            opacity: 0.45; /* تركيز أعلى للصورة لتكون واضحة */
+            opacity: 0.45; 
             animation: slowZoom 20s ease-in-out infinite alternate;
         }
 
@@ -104,7 +105,7 @@
             }
 
             .intro-content p {
-                color: var(--bg-ivory); /* لون عاجي فاتح ليتناسب مع الصورة الداكنة في المقدمة */
+                color: var(--bg-ivory); 
                 font-size: clamp(1.2rem, 3vw, 1.5rem);
                 letter-spacing: 3px;
                 margin-top: 10px;
@@ -119,7 +120,7 @@
             border-radius: 50px;
             border: none;
             background: linear-gradient(135deg, var(--gold), #FFF8DC);
-            color: #111; /* نص داكن للزر */
+            color: #111; 
             font-weight: 900;
             font-size: 1.1rem;
             font-family: 'Cairo';
@@ -146,7 +147,7 @@
         .hero-title {
             font-family: 'Amiri', serif;
             font-size: clamp(2.5rem, 9vw, 4rem);
-            color: var(--bg-ivory); /* عنوان أبيض عاجي بارز على الصورة الغامقة */
+            color: var(--bg-ivory); 
             text-shadow: 0 0 15px rgba(0,0,0,0.5);
         }
 
@@ -160,7 +161,7 @@
         }
 
         h3 {
-            color: var(--bg-ivory); /* نص ترحيبي عاجي بارز على الصورة الغامقة */
+            color: var(--bg-ivory); 
             font-weight: bold;
             font-size: 1.1rem;
             text-align: center;
@@ -256,14 +257,15 @@
 
             .countdown-wrap .num {
                 font-size: clamp(1.5rem, 7vw, 2.5rem);
-                color: var(--gold-dark);
+                /* تم التغيير للون الداكن الموحد ليتماشى مع الكلمات */
+                color: var(--text-main);
                 font-weight: bold;
                 line-height: 1;
             }
 
             .countdown-wrap .lbl {
                 font-size: clamp(0.75rem, 3vw, 1rem);
-                color: var(--text-main);
+                color: var(--text-muted);
                 font-weight: bold;
             }
 
@@ -348,6 +350,23 @@
                 background: rgba(212,175,55,0.25);
             }
 
+        /* زر Wish Money باللون الأحمر والأبيض */
+        .btn-wish {
+            background: linear-gradient(135deg, var(--red-main), var(--red-light)) !important;
+            color: #FFF !important;
+            border: none;
+            box-shadow: 0 4px 15px rgba(192, 57, 43, 0.3);
+        }
+
+            .btn-wish:hover {
+                background: linear-gradient(135deg, var(--red-light), var(--red-main)) !important;
+            }
+
+        /* صندوق النقوط بأطراف حمراء خفيفة */
+        .card-wish {
+            border: 1px solid rgba(192, 57, 43, 0.4);
+        }
+
         .form-input {
             width: 100%;
             padding: 12px 15px;
@@ -362,7 +381,7 @@
             transition: 0.3s;
         }
 
-            .form-input::placeholder { color: #666; } /* تغميق لون الـ Placeholder للوضوح */
+            .form-input::placeholder { color: #666; } 
             .form-input:focus { border-color: var(--gold-dark); box-shadow: 0 0 8px rgba(212,175,55,0.3); }
             .form-input option { background: #FFF; color: var(--text-main); }
 
@@ -401,8 +420,8 @@
             bottom: 15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 92%;
-            max-width: 400px;
+            width: 95%;
+            max-width: 480px; /* تم التوسيع لتتسع لـ 4 أزرار */
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(212,175,55,0.3);
             border-radius: 40px;
@@ -421,9 +440,10 @@
             font-family: 'Cairo';
             font-size: 1.3rem;
             cursor: pointer;
-            padding: 5px 12px;
+            padding: 5px 10px;
             border-radius: 20px;
             transition: 0.3s;
+            flex: 1; /* توزيع متساوٍ */
         }
 
             .nav-item span {
@@ -487,17 +507,19 @@
 
                     <div id="ticket-container" style="display: none; margin-top: 15px;"></div>
                 </div>
+            </section>
 
+            <section id="tab-gifts" class="page">
                 <h2>النقوط والتهاني 💌</h2>
-                <div class="card" style="text-align: center;">
-                    <h3 style="color:#C0392B; font-family:'Amiri',serif; margin-bottom:10px; font-size: 1.6rem; text-shadow: none;">💖 فرحتنا تكتمل بوجودكم</h3>
+                <div class="card card-wish" style="text-align: center;">
+                    <h3 style="color:var(--red-main); font-family:'Amiri',serif; margin-bottom:10px; font-size: 1.6rem; text-shadow: none;">💖 فرحتنا تكتمل بوجودكم</h3>
                     <p style="color:var(--text-muted); margin-bottom: 15px;">مشاركتكم هي أكبر هدية 🤍<br>ولمن يرغب بإرسال النقوط إلكترونياً عبر Wish Money:</p>
 
-                    <button id="copy-number-btn" class="form-input" style="background: rgba(212,175,55,0.1); border-color: var(--gold); color: var(--gold-dark); font-weight: bold; cursor: pointer;">
+                    <button id="copy-number-btn" class="form-input" style="background: rgba(192, 57, 43, 0.05); border-color: var(--red-light); color: var(--red-main); font-weight: bold; cursor: pointer;">
                         رقم الحساب: 00000000 (اضغط للنسخ 📋)
                     </button>
 
-                    <a href="https://www.whish.money/" target="_blank" class="btn" style="background: linear-gradient(135deg,#E11D48,#9333EA); color: #FFF !important; border: none;">✨ فتح تطبيق Wish Money ✨</a>
+                    <a href="https://www.whish.money/" target="_blank" class="btn btn-wish">✨ فتح تطبيق Wish Money ✨</a>
                 </div>
             </section>
 
@@ -513,6 +535,7 @@
         <nav class="bottom-nav">
             <button class="nav-item active" data-target="tab-home">🏠<br><span>الرئيسية</span></button>
             <button class="nav-item" data-target="tab-rsvp">💌<br><span>دعوة</span></button>
+            <button class="nav-item" data-target="tab-gifts">🎁<br><span>هدية</span></button>
             <button class="nav-item" data-target="tab-location">📍<br><span>الصالة</span></button>
         </nav>
     </div>
@@ -561,7 +584,7 @@
                     copyBtn: "(اضغط للنسخ 📋)",
                     wishBtn: "✨ فتح تطبيق Wish Money ✨",
                     locTitle: "موقع الصالة 📍",
-                    nav1: "الرئيسية", nav2: "دعوة", nav3: "الصالة",
+                    nav1: "الرئيسية", nav2: "دعوة", nav3: "هدية", nav4: "الصالة",
                     welcomeBack: "أهلاً بعودتك يا",
                     alreadyRegistered: "🤍 لقد قمت بتسجيل حضورك مسبقاً.",
                     vipTicket: "✨ تذكرة VIP ✨",
@@ -584,7 +607,7 @@
                     copyBtn: "(Click to copy 📋)",
                     wishBtn: "✨ Open Wish Money ✨",
                     locTitle: "Venue location 📍",
-                    nav1: "Home", nav2: "RSVP", nav3: "Location",
+                    nav1: "Home", nav2: "RSVP", nav3: "Gifts", nav4: "Location",
                     welcomeBack: "Welcome back,",
                     alreadyRegistered: "🤍 You have already registered your attendance.",
                     vipTicket: "✨ VIP Ticket ✨",
@@ -612,9 +635,11 @@
                     timeLabels[3].innerHTML = translations[currentLang].s;
                 }
 
-                const rsvpHeadings = document.querySelectorAll('#tab-rsvp h2');
-                if(rsvpHeadings[0]) rsvpHeadings[0].innerHTML = translations[currentLang].rsvpH2;
-                if(rsvpHeadings[1]) rsvpHeadings[1].innerHTML = translations[currentLang].giftsH2;
+                const rsvpH2 = document.querySelector('#tab-rsvp h2');
+                if(rsvpH2) rsvpH2.innerHTML = translations[currentLang].rsvpH2;
+                
+                const giftsH2 = document.querySelector('#tab-gifts h2');
+                if(giftsH2) giftsH2.innerHTML = translations[currentLang].giftsH2;
 
                 const nameInput = document.getElementById('guest-name');
                 if(nameInput) nameInput.placeholder = translations[currentLang].namePlace;
@@ -628,10 +653,10 @@
                 const submitBtn = document.getElementById('submit-rsvp');
                 if(submitBtn && !submitBtn.disabled) submitBtn.innerHTML = translations[currentLang].submitRsvp;
                 
-                const wishH3 = document.querySelector('#tab-rsvp h3');
+                const wishH3 = document.querySelector('#tab-gifts h3');
                 if(wishH3) wishH3.innerHTML = translations[currentLang].wishTitle;
                 
-                const wishP = document.querySelector('#tab-rsvp h3 + p');
+                const wishP = document.querySelector('#tab-gifts h3 + p');
                 if(wishP) wishP.innerHTML = translations[currentLang].wishDesc;
                 
                 const wishAppBtn = document.querySelector('a[href="https://www.whish.money/"]');
@@ -644,7 +669,8 @@
                 if(navSpans.length > 0) {
                     navSpans[0].innerHTML = translations[currentLang].nav1;
                     navSpans[1].innerHTML = translations[currentLang].nav2;
-                    navSpans[2].innerHTML = translations[currentLang].nav3;
+                    navSpans[2].innerHTML = translations[currentLang].nav3; // هدية
+                    navSpans[3].innerHTML = translations[currentLang].nav4; // الصالة
                 }
 
                 const copyBtnEl = document.getElementById('copy-number-btn');
@@ -702,10 +728,10 @@
                 setTimeout(() => { intro.style.display = 'none'; document.getElementById('main-app').style.display = 'block'; }, 1000);
             });
 
-            // 2. نظام التبويبات
+            // 2. نظام التبويبات (أصبح 4 صفحات)
             const navItems = document.querySelectorAll('.nav-item');
             const pages = document.querySelectorAll('.page');
-            const tabsArray = ['tab-home', 'tab-rsvp', 'tab-location'];
+            const tabsArray = ['tab-home', 'tab-rsvp', 'tab-gifts', 'tab-location'];
 
             function switchTab(targetId) {
                 navItems.forEach(btn => btn.classList.remove('active'));
@@ -746,7 +772,7 @@
                 }
             }, {passive: true});
 
-            // --- برمجة زر النسخ الذكي ---
+            // --- برمجة زر النسخ الذكي (تم تعديل الألوان للأحمر) ---
             const copyBtn = document.getElementById('copy-number-btn');
             copyBtn.innerText = `رقم الحساب: ${WISH_NUMBER} (اضغط للنسخ 📋)`;
 
@@ -759,9 +785,9 @@
 
                     setTimeout(() => {
                         this.innerText = `رقم الحساب: ${WISH_NUMBER} (اضغط للنسخ 📋)`;
-                        this.style.background = "rgba(212,175,55,0.1)";
-                        this.style.borderColor = "var(--gold)";
-                        this.style.color = "var(--gold-dark)";
+                        this.style.background = "rgba(192, 57, 43, 0.05)";
+                        this.style.borderColor = "var(--red-light)";
+                        this.style.color = "var(--red-main)";
                     }, 3000);
                 });
             });
