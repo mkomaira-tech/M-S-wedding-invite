@@ -1,0 +1,817 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mohammad & Sarah Wedding ✨</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        /* =========================================
+           الألوان الناصعة والخطوط (Theme)
+        ========================================= */
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #FDE047; /* ذهبي مشع جداً */
+            --bg-dark: #070B14;
+            --bg-card: rgba(15, 23, 42, 0.8);
+            --text-main: #FFFFFF; /* أبيض ناصع */
+            --text-muted: #E2E8F0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+            *::-webkit-scrollbar {
+                display: none;
+            }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: url("https://cdvotvobfynweyaouuyo.supabase.co/storage/v1/object/public/wedding-photos/background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-main);
+            overflow-x: hidden;
+            direction: rtl;
+            touch-action: pan-y; /* يمنع المتصفح من التدخل في السحب الأفقي */
+        }
+
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                background: rgba(5, 10, 20, 0.85);
+                z-index: -1;
+            }
+
+        /* =========================================
+           المقدمة السينمائية
+        ========================================= */
+        #cinematic-intro {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.2s ease-out;
+        }
+
+        .bg-img-intro {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://cdvotvobfynweyaouuyo.supabase.co/storage/v1/object/public/wedding-photos/background.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+            animation: slowZoom 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes slowZoom {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.15);
+            }
+        }
+
+        .intro-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+            .intro-content h1 {
+                color: var(--gold-light);
+                font-family: 'Amiri', serif;
+                font-size: clamp(2.8rem, 10vw, 5rem);
+                text-shadow: 0px 4px 20px rgba(0,0,0,0.9);
+            }
+
+            .intro-content p {
+                color: #FFF;
+                font-size: clamp(1.2rem, 3vw, 1.5rem);
+                letter-spacing: 3px;
+                margin-top: 10px;
+                font-weight: bold;
+            }
+
+        #enter-btn {
+            position: absolute;
+            bottom: 12%;
+            z-index: 2;
+            padding: 12px 35px;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #000;
+            font-weight: 900;
+            font-size: 1.1rem;
+            font-family: 'Cairo';
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(212,175,55,0.5);
+        }
+
+        /* =========================================
+           الواجهة الرئيسية والتبويبات
+        ========================================= */
+        #main-app {
+            position: relative;
+            z-index: 1;
+            padding-bottom: 90px;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .hero-title {
+            font-family: 'Amiri', serif;
+            font-size: clamp(2.5rem, 9vw, 4rem);
+            color: var(--gold-light);
+            animation: glow 3s ease-in-out infinite;
+            text-shadow: 0 0 15px rgba(212,175,55,0.5);
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                filter: brightness(1);
+            }
+
+            50% {
+                filter: brightness(1.3);
+            }
+        }
+
+        h2 {
+            font-family: 'Amiri', serif;
+            color: var(--gold-light);
+            text-align: center;
+            margin: 20px 0;
+            font-size: 2.2rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        h3 {
+            color: #FFF;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        /* الصفحات وحركة الانزلاق */
+        .page {
+            display: none;
+            padding: 10px 20px;
+            animation: slideHorizontal 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+        }
+
+            .page.active {
+                display: block;
+            }
+
+        @keyframes slideHorizontal {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* حاوية الصور الثلاثية الذكية */
+        .trio-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: clamp(5px, 2vw, 15px);
+            margin: 20px auto;
+            width: fit-content;
+            padding: clamp(10px, 3vw, 20px);
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 20px;
+            position: relative;
+        }
+
+            .trio-container::before {
+                content: '';
+                position: absolute;
+                inset: -2px;
+                border: 2px solid;
+                border-radius: 22px;
+                animation: glowingPulse 2.5s infinite ease-in-out;
+                pointer-events: none;
+                z-index: 1;
+            }
+
+        @keyframes glowingPulse {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(212,175,55,0.3);
+                border-color: rgba(212,175,55,0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(212,175,55,0.8);
+                border-color: rgba(225,29,72,0.8);
+            }
+        }
+
+        .trio-container img {
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            z-index: 2;
+            transition: transform 0.3s;
+        }
+
+        .trio-container .img-side {
+            width: clamp(45px, 15vw, 120px);
+        }
+
+        .trio-container .img-card {
+            width: clamp(150px, 45vw, 350px);
+        }
+
+        /* الكروت والعداد */
+        .card, .countdown-wrap {
+            background: var(--bg-card);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 18px;
+            padding: 20px;
+            margin: 15px auto;
+            max-width: 600px;
+        }
+
+            .card p {
+                color: var(--text-main);
+                font-size: 1.1rem;
+            }
+
+        .countdown-wrap {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            text-align: center;
+        }
+
+            .countdown-wrap .num {
+                font-size: 2.5rem;
+                color: var(--gold-light);
+                font-weight: bold;
+                line-height: 1;
+            }
+
+            .countdown-wrap .lbl {
+                font-size: 1rem;
+                color: #FFF;
+                font-weight: bold;
+            }
+
+        /* أزرار ونماذج الإدخال */
+        .btn {
+            display: block;
+            width: 100%;
+            background: rgba(212,175,55,0.15);
+            border: 1px solid var(--gold);
+            color: var(--gold-light) !important;
+            text-align: center;
+            padding: 12px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 15px auto;
+            font-size: 1.1rem;
+            font-family: 'Cairo';
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+            .btn:hover {
+                background: rgba(212,175,55,0.3);
+            }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(212,175,55,0.4);
+            border-radius: 12px;
+            color: #FFF;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+            .form-input::placeholder {
+                color: #94A3B8;
+            }
+
+            .form-input:focus {
+                border-color: var(--gold-light);
+                background: rgba(255,255,255,0.1);
+            }
+
+            .form-input option {
+                background: var(--bg-dark);
+                color: #FFF;
+            }
+
+        /* تذكرة الـ VIP */
+        .ticket-box {
+            background: linear-gradient(135deg, rgba(30,41,59,.9), rgba(15,23,42,.9));
+            border: 1.5px dashed var(--gold);
+            padding: 20px;
+            border-radius: 14px;
+            text-align: center;
+            animation: fadeSlideUp 0.5s ease;
+        }
+
+        /* زر الترجمة العائم */
+        .lang-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--gold);
+            color: var(--gold-light);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            z-index: 10000;
+            backdrop-filter: blur(5px);
+            transition: 0.3s;
+        }
+
+            .lang-btn:hover {
+                background: var(--gold);
+                color: #000;
+            }
+
+        /* شريط التنقل السفلي */
+        .bottom-nav {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 92%;
+            max-width: 400px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(212,175,55,0.5);
+            border-radius: 40px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 5px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .nav-item {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Cairo';
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 5px 12px;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+            .nav-item span {
+                font-size: 0.8rem;
+                display: block;
+                margin-top: 2px;
+            }
+
+            .nav-item.active {
+                color: #000;
+                background: linear-gradient(135deg, var(--gold), var(--gold-light));
+                transform: translateY(-5px);
+                font-weight: bold;
+            }
+
+        .map-wrap iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="lang-toggle" class="lang-btn">English 🌐</button>
+
+    <div id="cinematic-intro">
+        <div class="bg-img-intro"></div>
+        <div class="intro-content">
+            <h1>محمد & سارة</h1>
+            <p>٣١ مايو ٢٠٢٦</p>
+        </div>
+        <button id="enter-btn">إبدأ 🤍</button>
+    </div>
+
+    <div id="main-app" style="display: none;">
+        <header>
+            <h1 class="hero-title">محمد & سارة</h1>
+            <h3>ندعوكم لمشاركتنا أجمل لحظات العمر</h3>
+        </header>
+
+        <main id="pages-container">
+
+            <section id="tab-home" class="page active">
+                <div class="trio-container">
+
+                    <img src="https://cdvotvobfynweyaouuyo.supabase.co/storage/v1/object/public/wedding-photos/wed_card.jpg" class="img-card">
+
+                </div>
+
+                <div class="countdown-wrap">
+                    <div class="box"><span class="num" id="d">00</span><span class="lbl">يوم</span></div>
+                    <div class="box"><span class="num" id="h">00</span><span class="lbl">ساعة</span></div>
+                    <div class="box"><span class="num" id="m">00</span><span class="lbl">دقيقة</span></div>
+                    <div class="box"><span class="num" id="s">00</span><span class="lbl">ثانية</span></div>
+                </div>
+            </section>
+
+            <section id="tab-rsvp" class="page">
+                <h2>تأكيد الحضور 🎟️</h2>
+                <div class="card">
+                    <input type="text" id="guest-name" class="form-input" placeholder="الاسم الكريم (مثال: أحمد خليل...)">
+                    <select id="guest-side" class="form-input">
+                        <option value="جهة العريس 🤵">المدعو من: جهة العريس 🤵</option>
+                        <option value="جهة العروس 👰">المدعو من: جهة العروس 👰</option>
+                    </select>
+                    <button id="submit-rsvp" class="btn" style="background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #000 !important; border: none;">تأكيد الحضور  🎫</button>
+
+                    <div id="ticket-container" style="display: none; margin-top: 15px;"></div>
+                </div>
+
+                <h2>النقوط والتهاني 💌</h2>
+                <div class="card" style="text-align: center;">
+                    <h3 style="color:#E11D48; font-family:'Amiri',serif; margin-bottom:10px; font-size: 1.6rem;">💖 فرحتنا تكتمل بوجودكم</h3>
+                    <p style="color:#E2E8F0; margin-bottom: 15px;">مشاركتكم هي أكبر هدية 🤍<br>ولمن يرغب بإرسال النقوط إلكترونياً عبر Wish Money:</p>
+
+                    <button id="copy-number-btn" class="form-input" style="background: rgba(212,175,55,0.1); border-color: var(--gold); color: var(--gold-light); font-weight: bold; cursor: pointer;">
+                        رقم الحساب: 00000000 (اضغط للنسخ 📋)
+                    </button>
+
+                    <a href="https://www.whish.money/" target="_blank" class="btn" style="background: linear-gradient(135deg,#E11D48,#9333EA); color: #FFF !important; border: none;">✨ فتح تطبيق Wish Money ✨</a>
+                </div>
+            </section>
+
+            <section id="tab-location" class="page">
+                <h2>موقع الصالة 📍</h2>
+                <div class="card map-wrap">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3322.993864119795!2d35.3934256764207!3d33.60546367332862!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151ee52e784728f9%3A0xaa57f0e88d65b592!2sSofia%20Palace!5e0!3m2!1sen!2slb!4v1772620814491!5m2!1sen!2slb" allowfullscreen loading="lazy"></iframe>
+                </div>
+            </section>
+
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-target="tab-home">🏠<br><span>الرئيسية</span></button>
+            <button class="nav-item" data-target="tab-rsvp">💌<br><span>دعوة</span></button>
+            <button class="nav-item" data-target="tab-location">📍<br><span>الصالة</span></button>
+        </nav>
+    </div>
+
+    <script>
+        // 🛑 المفاتيح السرية 🛑
+        // 🛑 المفاتيح السرية 🛑
+        const SUPABASE_URL = "https://cdvotvobfynweyaouuyo.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkdm90dm9iZnlud2V5YW91dXlvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDI1OTcsImV4cCI6MjA4ODU3ODU5N30.-6PqZWUXbkdRhC8FWTIucwxMVusUa3uCl5x5qQlPphs";
+        const TELEGRAM_BOT_TOKEN = "8378064918:AAEDJRTaWuezmJGlFejDbZtVwpEji_V6BHo";
+        const TELEGRAM_CHAT_ID = "1336580158";
+        const WISH_NUMBER = "81351675";
+
+        // تهيئة قاعدة البيانات باسم جديد (supabaseClient) لتجنب التضارب مع المتصفح
+        let supabaseClient;
+        try {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        } catch (error) {
+            console.warn("تنبيه: مكتبة قاعدة البيانات لم يتم تحميلها بشكل صحيح.");
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            // --- نظام الترجمة الذكي (عربي / إنجليزي) ---
+            let currentLang = 'ar';
+            const langToggle = document.getElementById('lang-toggle');
+            
+            const translations = {
+                ar: {
+                    titleDate: "٣١ مايو ٢٠٢٦",
+                    enter: "إبدأ 🤍",
+                    headerSub: "ندعوكم لمشاركتنا أجمل لحظات العمر",
+                    cal: "📅 أضف الموعد إلى تقويمك",
+                    d: "يوم", h: "ساعة", m: "دقيقة", s: "ثانية",
+                    rsvpH2: "تأكيد الحضور 🎟️",
+                    namePlace: "الاسم الكريم (مثال: أحمد خليل...)",
+                    side1: "المدعو من: جهة العريس 🤵",
+                    side2: "المدعو من: جهة العروس 👰",
+                    submitRsvp: "تأكيد الحضور  🎫",
+                    giftsH2: "النقوط والتهاني 💌",
+                    wishTitle: "💖 فرحتنا تكتمل بوجودكم",
+                    wishDesc: "مشاركتكم هي أكبر هدية 🤍<br>ولمن يرغب بإرسال النقوط إلكترونياً عبر Wish Money:",
+                    copyBtn: "(اضغط للنسخ 📋)",
+                    wishBtn: "✨ فتح تطبيق Wish Money ✨",
+                    locTitle: "موقع الصالة 📍",
+                    nav1: "الرئيسية", nav2: "دعوة", nav3: "الصالة"
+                },
+                en: {
+                    titleDate: "May 31, 2026",
+                    enter: "Enter 🤍",
+                    headerSub: "We invite you to share our happiest moments",
+                    cal: "📅 Add to Calendar",
+                    d: "Days", h: "Hours", m: "Mins", s: "Secs",
+                    rsvpH2: "RSVP 🎟️",
+                    namePlace: "Full Name (e.g. John Doe...)",
+                    side1: "Invited by: Groom's Side 🤵",
+                    side2: "Invited by: Bride's Side 👰",
+                    submitRsvp: "Confirm & Get Ticket 🎫",
+                    giftsH2: "Gifts & Wishes 💌",
+                    wishTitle: "💖 Your presence is our joy",
+                    wishDesc: "Your participation is the greatest gift 🤍<br>To send a digital gift via Wish Money:",
+                    copyBtn: "(Click to copy 📋)",
+                    wishBtn: "✨ Open Wish Money ✨",
+                    locTitle: "Venue location 📍",
+                    nav1: "Home", nav2: "RSVP", nav3: "Location"
+                }
+            };
+
+            langToggle.addEventListener('click', () => {
+                currentLang = currentLang === 'ar' ? 'en' : 'ar';
+                
+                // 1. تغيير اتجاه الصفحة والزر
+                document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+                langToggle.innerHTML = currentLang === 'ar' ? 'English 🌐' : 'عربي 🌐';
+                langToggle.style.left = currentLang === 'ar' ? '15px' : 'auto';
+                langToggle.style.right = currentLang === 'ar' ? 'auto' : '15px';
+                
+                // 2. تحديث النصوص العامة
+                document.querySelector('#cinematic-intro p').innerHTML = translations[currentLang].titleDate;
+                document.getElementById('enter-btn').innerHTML = translations[currentLang].enter;
+                document.querySelector('header h3').innerHTML = translations[currentLang].headerSub;
+                
+                const calBtn = document.querySelector('#tab-home .btn');
+                if(calBtn) calBtn.innerHTML = translations[currentLang].cal;
+                
+                // 3. تحديث العداد
+                const timeLabels = document.querySelectorAll('.countdown-wrap .lbl');
+                if(timeLabels.length > 0) {
+                    timeLabels[0].innerHTML = translations[currentLang].d;
+                    timeLabels[1].innerHTML = translations[currentLang].h;
+                    timeLabels[2].innerHTML = translations[currentLang].m;
+                    timeLabels[3].innerHTML = translations[currentLang].s;
+                }
+                
+                // 4. تحديث صفحة الدعوة والنقوط
+                const rsvpHeadings = document.querySelectorAll('#tab-rsvp h2');
+                if(rsvpHeadings[0]) rsvpHeadings[0].innerHTML = translations[currentLang].rsvpH2;
+                if(rsvpHeadings[1]) rsvpHeadings[1].innerHTML = translations[currentLang].giftsH2;
+
+                const nameInput = document.getElementById('guest-name');
+                if(nameInput) nameInput.placeholder = translations[currentLang].namePlace;
+                
+                const sideSelect = document.getElementById('guest-side');
+                if(sideSelect) {
+                    sideSelect.options[0].text = translations[currentLang].side1;
+                    sideSelect.options[1].text = translations[currentLang].side2;
+                }
+                
+                const submitBtn = document.getElementById('submit-rsvp');
+                if(submitBtn && !submitBtn.disabled) submitBtn.innerHTML = translations[currentLang].submitRsvp;
+                
+                const wishH3 = document.querySelector('#tab-rsvp h3');
+                if(wishH3) wishH3.innerHTML = translations[currentLang].wishTitle;
+                
+                const wishP = document.querySelector('#tab-rsvp h3 + p');
+                if(wishP) wishP.innerHTML = translations[currentLang].wishDesc;
+                
+                const wishAppBtn = document.querySelector('a[href="https://www.whish.money/"]');
+                if(wishAppBtn) wishAppBtn.innerHTML = translations[currentLang].wishBtn;
+                
+                // 5. تحديث صفحة الخريطة
+                const locH2 = document.querySelector('#tab-location h2');
+                if(locH2) locH2.innerHTML = translations[currentLang].locTitle;
+
+                // 6. تحديث شريط التنقل السفلي
+                const navSpans = document.querySelectorAll('.nav-item span');
+                if(navSpans.length > 0) {
+                    navSpans[0].innerHTML = translations[currentLang].nav1;
+                    navSpans[1].innerHTML = translations[currentLang].nav2;
+                    navSpans[2].innerHTML = translations[currentLang].nav3;
+                }
+
+                // 7. تحديث نص زر النسخ
+                const copyBtnEl = document.getElementById('copy-number-btn');
+                if(copyBtnEl && !copyBtnEl.innerText.includes('✅')) {
+                    copyBtnEl.innerText = currentLang === 'ar' ? `رقم الحساب: ${WISH_NUMBER} ${translations[currentLang].copyBtn}` : `Account: ${WISH_NUMBER} ${translations[currentLang].copyBtn}`;
+                }
+            });
+
+            // 1. الدخول للموقع
+            document.getElementById('enter-btn').addEventListener('click', () => {
+                const intro = document.getElementById('cinematic-intro');
+                intro.style.opacity = '0';
+                setTimeout(() => { intro.style.display = 'none'; document.getElementById('main-app').style.display = 'block'; }, 1000);
+            });
+
+            // 2. نظام التبويبات
+            const navItems = document.querySelectorAll('.nav-item');
+            const pages = document.querySelectorAll('.page');
+            const tabsArray = ['tab-home', 'tab-rsvp', 'tab-location']; // تم إزالة الألبوم من هنا
+
+            function switchTab(targetId) {
+                navItems.forEach(btn => btn.classList.remove('active'));
+                pages.forEach(page => page.classList.remove('active'));
+                document.querySelector(`.nav-item[data-target="${targetId}"]`).classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+            }
+
+            navItems.forEach(item => {
+                item.addEventListener('click', () => switchTab(item.getAttribute('data-target')));
+            });
+
+            // 3. نظام السحب الآمن
+            let startX = 0, startY = 0, isDragging = false;
+            const pagesContainer = document.getElementById('pages-container');
+
+            pagesContainer.addEventListener('pointerdown', e => {
+                if (['INPUT', 'SELECT', 'BUTTON', 'A'].includes(e.target.tagName)) return;
+                startX = e.clientX; startY = e.clientY; isDragging = true;
+            }, {passive: true});
+
+            pagesContainer.addEventListener('pointerup', e => {
+                if (!isDragging) return;
+                isDragging = false;
+                let diffX = startX - e.clientX;
+                let diffY = startY - e.clientY;
+
+                if (Math.abs(diffX) > 70 && Math.abs(diffX) > Math.abs(diffY) * 1.5) {
+                    const activePage = document.querySelector('.page.active');
+                    if(!activePage) return;
+                    let currentIndex = tabsArray.indexOf(activePage.id);
+
+                    if (diffX > 0 && currentIndex < tabsArray.length - 1) {
+                        switchTab(tabsArray[currentIndex + 1]);
+                    } else if (diffX < 0 && currentIndex > 0) {
+                        switchTab(tabsArray[currentIndex - 1]);
+                    }
+                }
+            }, {passive: true});
+
+            // --- برمجة زر النسخ الذكي ---
+            const copyBtn = document.getElementById('copy-number-btn');
+            copyBtn.innerText = `رقم الحساب: ${WISH_NUMBER} (اضغط للنسخ 📋)`;
+
+            copyBtn.addEventListener('click', function() {
+                navigator.clipboard.writeText(WISH_NUMBER).then(() => {
+                    this.innerText = "✅ تم نسخ الرقم بنجاح!";
+                    this.style.background = "rgba(74, 222, 128, 0.2)";
+                    this.style.borderColor = "#4ade80";
+                    this.style.color = "#4ade80";
+
+                    setTimeout(() => {
+                        this.innerText = `رقم الحساب: ${WISH_NUMBER} (اضغط للنسخ 📋)`;
+                        this.style.background = "rgba(212,175,55,0.1)";
+                        this.style.borderColor = "var(--gold)";
+                        this.style.color = "var(--gold-light)";
+                    }, 3000);
+                });
+            });
+
+            // --- برمجة زر إرسال RSVP الذكي ---
+            document.getElementById('submit-rsvp').addEventListener('click', async function() {
+                const nameInput = document.getElementById('guest-name').value.trim();
+                const sideInput = document.getElementById('guest-side').value;
+                const btn = this;
+                const ticketBox = document.getElementById('ticket-container');
+
+                if (!nameInput) { alert("يرجى إدخال اسمك الكريم أولاً!"); return; }
+
+                btn.innerText = "جارٍ تجهيز تذكرتك... ⏳";
+                btn.disabled = true;
+                btn.style.opacity = "0.7";
+
+                const total = 1; // شخص واحد
+
+                try {
+                    // فحص إذا كانت مكتبة قاعدة البيانات تعمل أصلاً
+                    if (!supabaseClient) throw new Error("مكتبة Supabase لم تتصل. تأكد من اتصالك بالإنترنت.");
+
+                    let currentTable = "قيد الانتظار ⏳";
+
+                    // 1. البحث عن الضيف (لمنع التكرار)
+                    const { data: existing, error: searchError } = await supabaseClient
+                        .from('guests')
+                        .select('*')
+                        .eq('name', nameInput);
+
+                    if (searchError) throw new Error(searchError.message);
+
+                    // 2. الضيف موجود مسبقاً
+                    if (existing && existing.length > 0) {
+                        currentTable = existing[0].table_number || "قيد الانتظار ⏳";
+                        alert(`أهلاً بعودتك يا ${nameInput}! 🤍 لقد قمت بتسجيل حضورك مسبقاً.`);
+                    }
+                    // 3. تسجيل ضيف جديد
+                    else {
+                        const { error: insertError } = await supabaseClient.from('guests').insert([{
+                            name: nameInput,
+                            side: sideInput,
+                            companions: "بدون مرافقين",
+                            total_persons: total,
+                            table_number: "قيد الانتظار ⏳"
+                        }]);
+
+                        if (insertError) throw new Error(insertError.message);
+
+                        // جلب الإحصائيات الجديدة من قاعدة البيانات لحساب الأعداد
+                        const { data: allGuests } = await supabaseClient.from('guests').select('side, total_persons');
+                        let groomCount = 0;
+                        let brideCount = 0;
+                        
+                        if (allGuests) {
+                            allGuests.forEach(guest => {
+                                const p = guest.total_persons || 1; // إذا لم يكن هناك عدد يعتبر شخصاً واحداً
+                                if (guest.side && guest.side.includes('العريس')) groomCount += p;
+                                else if (guest.side && guest.side.includes('العروس')) brideCount += p;
+                            });
+                        }
+                        const totalCount = groomCount + brideCount;
+
+                        // إرسال إشعار تليجرام شامل ومفصل
+                        const msg = `🎊 *ضيف جديد سجّل حضوره!*\n\n👤 الاسم: ${nameInput}\n📍 الجهة: ${sideInput}\n\n📊 *إحصائيات الحضور حتى الآن:*\n🤵 جهة العريس: ${groomCount}\n👰 جهة العروس: ${brideCount}\n👥 الإجمالي: ${totalCount}`;
+                        
+                        fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg, parse_mode: 'Markdown' })
+                        });
+                    }
+                    
+
+                    // إظهار التذكرة
+                    btn.style.display = 'none';
+                    ticketBox.style.display = 'block';
+                    ticketBox.innerHTML = `
+                        <div class="ticket-box">
+                            <p style="color:var(--gold-light); font-family:'Amiri',serif; font-size:1.6rem; margin-bottom:5px;">✨ تذكرة VIP ✨</p>
+                            <p style="color:#FFF; font-size:1.1rem; margin-bottom:8px;">أهلاً بك يا <b style="color:var(--gold);">${nameInput}</b></p>
+                        </div>
+                    `;
+
+                } catch (error) {
+                    // هنا سيظهر لك الخطأ التقني الدقيق جداً الذي يخفيه Supabase
+                    alert("⚠️ خطأ تقني من قاعدة البيانات:\n" + error.message);
+                    btn.innerText = "تأكيد الحضور  🎫";
+                    btn.disabled = false;
+                    btn.style.opacity = "1";
+                }
+            });
+
+            // 4. العداد
+            const weddingDate = new Date("May 31, 2026 19:00:00").getTime();
+            setInterval(() => {
+                const distance = weddingDate - new Date().getTime();
+                if (distance > 0) {
+                    document.getElementById('d').innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                    document.getElementById('h').innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                    document.getElementById('m').innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                    document.getElementById('s').innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
