@@ -10,18 +10,20 @@
 
     <style>
         /* =========================================
-            الثيم: العاجي والذهبي (Ivory & Gold)
-            مع نصوص داكنة وخلفية صورة أوضح وتعديلات الأحمر
+            الثيم الليلي الفخم مع لون الخط المخصص
         ========================================= */
         :root {
             --gold: #D4AF37; 
-            --gold-dark: #997300; 
+            --gold-dark: #B8860B; 
             --gold-light: #F9E596; 
-            --bg-ivory: #FFFFF0; 
-            --bg-card: rgba(255, 255, 255, 0.90); 
-            --text-main: #111111; 
-            --text-muted: #555555; 
-            --red-main: #C0392B; /* لون أحمر فخم للويش ماني */
+            --bg-ivory: #1A1A1A; /* تحويل الخلفية الأساسية للون داكن */
+            --bg-card: rgba(20, 20, 20, 0.85); /* كروت داكنة شفافة لتبرز اللون الفاتح للخط */
+            
+            /* اللون المستخرج من صورتك */
+            --text-main: #D6D2C4; 
+            --text-muted: #A8A498; /* درجة أغمق قليلاً من لونك للنصوص الثانوية */
+            
+            --red-main: #C0392B; 
             --red-light: #E74C3C;
         }
 
@@ -55,7 +57,7 @@
                 content: "";
                 position: fixed;
                 inset: 0;
-                background: rgba(0, 0, 0, 0.4); 
+                background: rgba(0, 0, 0, 0.7); /* تعتيم أقوى للصورة لكي يبرز النص الفاتح */
                 z-index: -1;
             }
 
@@ -65,7 +67,7 @@
         #cinematic-intro {
             position: fixed;
             inset: 0;
-            background: #111; 
+            background: #0A0A0A; 
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -82,7 +84,7 @@
             background-image: url('https://cdvotvobfynweyaouuyo.supabase.co/storage/v1/object/public/wedding-photos/background.jpg');
             background-size: cover;
             background-position: center;
-            opacity: 0.45; 
+            opacity: 0.3; 
             animation: slowZoom 20s ease-in-out infinite alternate;
         }
 
@@ -105,7 +107,7 @@
             }
 
             .intro-content p {
-                color: var(--bg-ivory); 
+                color: var(--text-main); /* استخدام لونك المخصص هنا */
                 font-size: clamp(1.2rem, 3vw, 1.5rem);
                 letter-spacing: 3px;
                 margin-top: 10px;
@@ -147,25 +149,25 @@
         .hero-title {
             font-family: 'Amiri', serif;
             font-size: clamp(2.5rem, 9vw, 4rem);
-            color: var(--bg-ivory); 
-            text-shadow: 0 0 15px rgba(0,0,0,0.5);
+            color: var(--text-main); /* العنوان الرئيسي بلونك المخصص */
+            text-shadow: 0 0 15px rgba(0,0,0,0.8);
         }
 
         h2 {
             font-family: 'Amiri', serif;
-            color: var(--gold-dark);
+            color: var(--gold);
             text-align: center;
             margin: 20px 0;
             font-size: 2.2rem;
-            text-shadow: 0 2px 10px rgba(212,175,55,0.2);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         h3 {
-            color: var(--bg-ivory); 
+            color: var(--text-muted); 
             font-weight: bold;
             font-size: 1.1rem;
             text-align: center;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
         }
 
         .page {
@@ -191,7 +193,7 @@
             margin: 20px auto;
             width: fit-content;
             padding: clamp(10px, 3vw, 20px);
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(20, 20, 20, 0.6); /* خلفية داكنة للصور */
             border-radius: 20px;
             position: relative;
         }
@@ -214,7 +216,7 @@
 
         .trio-container img {
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             z-index: 2;
             transition: transform 0.3s;
         }
@@ -225,18 +227,18 @@
         }
 
         .card, .countdown-wrap {
-            background: var(--bg-card);
+            background: var(--bg-card); /* خلفية البطاقات الداكنة لبروز النص */
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(212,175,55,0.4);
+            border: 1px solid rgba(212,175,55,0.3);
             border-radius: 18px;
             padding: 20px;
             margin: 15px auto;
             max-width: 600px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
             .card p {
-                color: var(--text-main);
+                color: var(--text-main); /* لونك المخصص للنصوص داخل الكروت */
                 font-size: 1.1rem;
             }
 
@@ -257,8 +259,7 @@
 
             .countdown-wrap .num {
                 font-size: clamp(1.5rem, 7vw, 2.5rem);
-                /* تم التغيير للون الداكن الموحد ليتماشى مع الكلمات */
-                color: var(--text-main);
+                color: var(--text-main); /* لون الأرقام مخصص */
                 font-weight: bold;
                 line-height: 1;
             }
@@ -275,6 +276,7 @@
             height: clamp(250px, 50vh, 350px);
             border: none;
             border-radius: 15px;
+            filter: invert(90%) hue-rotate(180deg); /* خريطة بالوضع الليلي لتلائم التصميم */
         }
 
         /* --- نافذة التكبير --- */
@@ -286,7 +288,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 240, 0.95);
+            background-color: rgba(10, 10, 10, 0.95);
             backdrop-filter: blur(8px);
             justify-content: center;
             align-items: center;
@@ -324,7 +326,7 @@
         }
 
             .close-modal:hover {
-                color: var(--gold-dark);
+                color: var(--gold);
             }
 
         /* --- الأزرار وحقول الإدخال --- */
@@ -333,7 +335,7 @@
             width: 100%;
             background: rgba(212,175,55,0.1);
             border: 1px solid var(--gold);
-            color: var(--gold-dark) !important;
+            color: var(--gold) !important;
             text-align: center;
             padding: 12px;
             border-radius: 50px;
@@ -371,37 +373,37 @@
             width: 100%;
             padding: 12px 15px;
             margin-bottom: 15px;
-            background: rgba(255,255,255,0.9);
-            border: 1px solid rgba(212,175,55,0.6);
+            background: rgba(30,30,30,0.8); /* حقول إدخال داكنة تبرز النص الفاتح */
+            border: 1px solid rgba(212,175,55,0.4);
             border-radius: 12px;
-            color: var(--text-main);
+            color: var(--text-main); /* الكتابة داخل الحقول بلونك المخصص */
             font-family: 'Cairo', sans-serif;
             font-size: 1rem;
             outline: none;
             transition: 0.3s;
         }
 
-            .form-input::placeholder { color: #666; } 
-            .form-input:focus { border-color: var(--gold-dark); box-shadow: 0 0 8px rgba(212,175,55,0.3); }
-            .form-input option { background: #FFF; color: var(--text-main); }
+            .form-input::placeholder { color: #888; } 
+            .form-input:focus { border-color: var(--gold); box-shadow: 0 0 8px rgba(212,175,55,0.3); }
+            .form-input option { background: #222; color: var(--text-main); }
 
         .ticket-box {
-            background: linear-gradient(135deg, rgba(255,255,255,.95), rgba(253,245,230,.95));
-            border: 1.5px dashed var(--gold-dark);
+            background: linear-gradient(135deg, rgba(40,40,40,.95), rgba(20,20,20,.95));
+            border: 1.5px dashed var(--gold);
             padding: 20px;
             border-radius: 14px;
             text-align: center;
             animation: fadeSlideUp 0.5s ease;
-            box-shadow: 0 5px 15px rgba(212,175,55,0.15);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
         .lang-btn {
             position: absolute;
             top: 15px;
             left: 15px;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(20, 20, 20, 0.8);
             border: 1px solid var(--gold);
-            color: var(--gold-dark);
+            color: var(--gold);
             padding: 6px 14px;
             border-radius: 20px;
             font-family: 'Cairo', sans-serif;
@@ -413,7 +415,7 @@
             transition: 0.3s;
         }
 
-            .lang-btn:hover { background: var(--gold); color: #FFF; }
+            .lang-btn:hover { background: var(--gold); color: #111; }
 
         .bottom-nav {
             position: fixed;
@@ -421,8 +423,8 @@
             left: 50%;
             transform: translateX(-50%);
             width: 95%;
-            max-width: 480px; /* تم التوسيع لتتسع لـ 4 أزرار */
-            background: rgba(255, 255, 255, 0.95);
+            max-width: 480px; 
+            background: rgba(20, 20, 20, 0.95);
             border: 1px solid rgba(212,175,55,0.3);
             border-radius: 40px;
             display: flex;
@@ -430,7 +432,7 @@
             align-items: center;
             padding: 8px 5px;
             z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .nav-item {
@@ -443,7 +445,7 @@
             padding: 5px 10px;
             border-radius: 20px;
             transition: 0.3s;
-            flex: 1; /* توزيع متساوٍ */
+            flex: 1; 
         }
 
             .nav-item span {
@@ -453,7 +455,7 @@
             }
 
             .nav-item.active {
-                color: var(--text-main);
+                color: #111;
                 background: linear-gradient(135deg, var(--gold-light), var(--gold));
                 transform: translateY(-5px);
                 font-weight: bold;
@@ -503,7 +505,7 @@
                         <option value="جهة العريس 🤵">المدعو من: جهة العريس 🤵</option>
                         <option value="جهة العروس 👰">المدعو من: جهة العروس 👰</option>
                     </select>
-                    <button id="submit-rsvp" class="btn" style="background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--text-main) !important; border: none;">تأكيد الحضور  🎫</button>
+                    <button id="submit-rsvp" class="btn" style="background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #111 !important; border: none;">تأكيد الحضور  🎫</button>
 
                     <div id="ticket-container" style="display: none; margin-top: 15px;"></div>
                 </div>
@@ -513,9 +515,9 @@
                 <h2>النقوط والتهاني 💌</h2>
                 <div class="card card-wish" style="text-align: center;">
                     <h3 style="color:var(--red-main); font-family:'Amiri',serif; margin-bottom:10px; font-size: 1.6rem; text-shadow: none;">💖 فرحتنا تكتمل بوجودكم</h3>
-                    <p style="color:var(--text-muted); margin-bottom: 15px;">مشاركتكم هي أكبر هدية 🤍<br>ولمن يرغب بإرسال النقوط إلكترونياً عبر Wish Money:</p>
+                    <p style="color:var(--text-main); margin-bottom: 15px;">مشاركتكم هي أكبر هدية 🤍<br>ولمن يرغب بإرسال النقوط إلكترونياً عبر Wish Money:</p>
 
-                    <button id="copy-number-btn" class="form-input" style="background: rgba(192, 57, 43, 0.05); border-color: var(--red-light); color: var(--red-main); font-weight: bold; cursor: pointer;">
+                    <button id="copy-number-btn" class="form-input" style="background: rgba(192, 57, 43, 0.05); border-color: var(--red-light); color: var(--red-light); font-weight: bold; cursor: pointer;">
                         رقم الحساب: 00000000 (اضغط للنسخ 📋)
                     </button>
 
@@ -669,8 +671,8 @@
                 if(navSpans.length > 0) {
                     navSpans[0].innerHTML = translations[currentLang].nav1;
                     navSpans[1].innerHTML = translations[currentLang].nav2;
-                    navSpans[2].innerHTML = translations[currentLang].nav3; // هدية
-                    navSpans[3].innerHTML = translations[currentLang].nav4; // الصالة
+                    navSpans[2].innerHTML = translations[currentLang].nav3; 
+                    navSpans[3].innerHTML = translations[currentLang].nav4; 
                 }
 
                 const copyBtnEl = document.getElementById('copy-number-btn');
@@ -682,7 +684,7 @@
                 const ticketBoxP2 = document.querySelector('.ticket-box p:last-child');
                 if(ticketBoxP1 && nameInput && nameInput.value) {
                     ticketBoxP1.innerHTML = translations[currentLang].vipTicket;
-                    ticketBoxP2.innerHTML = `${translations[currentLang].welcome} <b style="color:var(--gold-dark);">${nameInput.value}</b>`;
+                    ticketBoxP2.innerHTML = `${translations[currentLang].welcome} <b style="color:var(--gold);">${nameInput.value}</b>`;
                 }
             });
 
@@ -728,7 +730,7 @@
                 setTimeout(() => { intro.style.display = 'none'; document.getElementById('main-app').style.display = 'block'; }, 1000);
             });
 
-            // 2. نظام التبويبات (أصبح 4 صفحات)
+            // 2. نظام التبويبات
             const navItems = document.querySelectorAll('.nav-item');
             const pages = document.querySelectorAll('.page');
             const tabsArray = ['tab-home', 'tab-rsvp', 'tab-gifts', 'tab-location'];
@@ -772,7 +774,7 @@
                 }
             }, {passive: true});
 
-            // --- برمجة زر النسخ الذكي (تم تعديل الألوان للأحمر) ---
+            // --- برمجة زر النسخ الذكي ---
             const copyBtn = document.getElementById('copy-number-btn');
             copyBtn.innerText = `رقم الحساب: ${WISH_NUMBER} (اضغط للنسخ 📋)`;
 
@@ -781,13 +783,13 @@
                     this.innerText = "✅ تم نسخ الرقم بنجاح!";
                     this.style.background = "rgba(74, 222, 128, 0.2)";
                     this.style.borderColor = "#4ade80";
-                    this.style.color = "#22c55e";
+                    this.style.color = "#4ade80";
 
                     setTimeout(() => {
                         this.innerText = `رقم الحساب: ${WISH_NUMBER} (اضغط للنسخ 📋)`;
                         this.style.background = "rgba(192, 57, 43, 0.05)";
                         this.style.borderColor = "var(--red-light)";
-                        this.style.color = "var(--red-main)";
+                        this.style.color = "var(--red-light)";
                     }, 3000);
                 });
             });
@@ -860,8 +862,8 @@
                     ticketBox.style.display = 'block';
                     ticketBox.innerHTML = `
                         <div class="ticket-box">
-                            <p style="color:var(--gold-dark); font-family:'Amiri',serif; font-size:1.6rem; margin-bottom:5px;">${translations[currentLang].vipTicket}</p>
-                            <p style="color:var(--text-main); font-size:1.1rem; margin-bottom:8px;">${translations[currentLang].welcome} <b style="color:var(--gold-dark);">${nameInput}</b></p>
+                            <p style="color:var(--gold); font-family:'Amiri',serif; font-size:1.6rem; margin-bottom:5px;">${translations[currentLang].vipTicket}</p>
+                            <p style="color:var(--text-main); font-size:1.1rem; margin-bottom:8px;">${translations[currentLang].welcome} <b style="color:var(--gold);">${nameInput}</b></p>
                         </div>
                     `;
 
